@@ -1,0 +1,306 @@
+<header class="navbar navbar-default navbar-fixed-top header affix" id="header">
+	<div class="container">
+		<div class="navbar-header">
+			<!-- 屏幕自适应，最小化时显示一个按钮 -->
+			<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#CollapseNavbar">
+                <i class="fa fa-list"></i>
+            </button>
+			<a href="/" class="navbar-brand navbar-logo"><img src="/static/images/logo.png" height="30"></a>
+		</div>
+		<div class="collapse navbar-collapse" id="CollapseNavbar">
+
+			<ul class="nav navbar-nav navbar-left navbar-item">
+
+				<li><a href="/articles/"><span>文章</span></a></li>
+
+				<li><a href="/questions/"><span>问答</span></a></li>
+
+				<li><a href="#"><span>LabX</span></a></li>
+
+			</ul>
+
+			<form method="get" action="/search/" class="navbar-form navbar-left " role="search">
+
+				<div class="input-group clearfix">
+
+					<input id="SearchInput" type="text" name="q" class="form-control navbar-input pull-left" autocomplete="off" placeholder="股票代码/简称/拼音缩写">
+					<button class="input-group-addon btn-search pull-left" type="submit" id="searchBtn"><i class="glyphicon glyphicon-search search-ico"></i></button>
+
+				</div>
+
+			</form>
+
+			<ul class="nav navbar-nav navbar-left pull-down navbar-quiz">
+				<li class="dropdown">
+					<a href="/signin" class="btn-mes-show"><span>提问</span></a>
+
+				</li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right navbar-item">
+				<li><a href="/signup" target="_blank"><i class="fa fa-pencil-square-o"></i> 注册</a></li>
+				<li><a href="/signin" target="_blank"><i class="fa fa-sign-in"></i> 登录</a></li>
+			</ul>
+		</div>
+	</div>
+	<!--消息弹出层-->
+	<script type="text/javascript">
+		$(function() {
+
+			var messagesstring = '<div class="messages-wrap">' +
+				'<ul class="nav nav-tabs messages-trigger-menu">' +
+				'<li class="active"><a href="#voice" data-toggle="tab"><i class="fa fa-volume-up"></i></a></li>' +
+				'<li><a href="#like" data-toggle="tab"><i class="fa fa-thumbs-up"></i></a></li>' +
+				'<li><a href="#friend" data-toggle="tab"><i class="fa fa-user-plus"></i></a></li>' +
+				'<li><a href="#letter" data-toggle="tab"><i class="fa fa-envelope"></i></a></li>' +
+				'</ul>' +
+				'<div class="tab-content ">' +
+				'<div class="tab-pane fade in active" id="voice">' +
+				'<ul class="list">' +
+				'<li class="active"><p><a href="">李明伟:</a><a href="" class="messages-detail">不知道说什么，反正就是一对消息便可。</a></p></li>' +
+				'<li><p><a href="">李明伟:</a><a href="" class="messages-detail">不知道说什么，反正就是一对消息便可。</a></p></li>' +
+				'<li><p><a href="">李明伟:</a><a href="" class="messages-detail">不知道说什么，反正就是一对消息便可。</a></p></li>' +
+				'<li><p><a href="">李明伟:</a><a href="" class="messages-detail">不知道说什么，反正就是一对消息便可。</a></p></li>' +
+				'</ul>' +
+				'<div class="list-bottom"><a href="" class="btn-all">查看全部 ></a></div>' +
+				'</div>' +
+				'<div class="tab-pane fade" id="like">' +
+				'<ul class="list">点赞</ul>' +
+				'</div>' +
+				'<div class="tab-pane fade" id="friend"><ul class="list">加好友</ul></div>' +
+				'<div class="tab-pane fade" id="letter"><ul class="list">信封</ul></div>' +
+				'</div>' +
+				'</div>';
+
+			$('#MessagesTips').popover({
+				trigger: 'click',
+				template: '<div class="popover messages-popover" role="tooltip"><div class="popover-content messages-content"></div></div>',
+				placement: 'bottom',
+				html: 'true',
+				content: messagesstring,
+				animation: 'false'
+			})
+		})
+	</script>
+	<!--消息弹出层-->
+	<link href="/static/css/select2.css" rel="stylesheet" type="text/css">
+	<script src="/static/js/libs/velocity/velocity.min.js" type="text/javascript"></script>
+	<script src="/static/js/libs/velocity/velocity.ui.min.js" type="text/javascript"></script>
+	<script src="/static/js/libs/select2/select2.js" type="text/javascript"></script>
+	<!--提问弹出层-->
+	<div class="modal quiz-modal" id="QuestionAskModal" role="dialog" data-easein="expandIn" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header wrap-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">×</span></button>
+					<h4 class="modal-title wrap-title">写下您的问题</h4>
+				</div>
+				<div class="modal-body wrap-body">
+					<div class="notes">
+						<p>请先在搜索栏搜索你的问题寻找答案。</p>
+					</div>
+					<div class="questionAsk-content">
+						<form id="QuestionAskForm" method="post">
+							<input type="hidden" name="auth_token" value="">
+							<div class="questionAsk-section">
+								<div class="question-title">
+									<textarea required="required" rows="2" placeholder="问题标题" name="title"></textarea>
+								</div>
+							</div>
+							<p class="warning-alert title-warning">这里是提问标题提示区</p>
+							<div class="questionAsk-section">
+								<select id="sel_menu" class="js-example-basic-multiple select2-hidden-accessible" multiple="" name="tags[]" tabindex="-1" aria-hidden="true"></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: auto;"><span class="selection"><span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1"><ul class="select2-selection__rendered"><li class="select2-search select2-search--inline"><input class="select2-search__field" type="search" tabindex="0" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" placeholder="请添加标签" style="width: 100px;"></li></ul></span></span>
+								<span
+								  class="dropdown-wrapper" aria-hidden="true"></span>
+									</span>
+							</div>
+							<p class="warning-alert tag-warning">这里是标签提示区</p>
+							<div class="questionAsk-section wrap-detail">
+								<div class="section-header">问题补充（可选）:</div>
+								<div class="question-detail">
+									<textarea rows="5" placeholder="问题背景,条件等相关详细信息" name="detail"></textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn-primary btn-submit" id="SubmitButton">提交问题</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--提问弹出层-->
+	<script>
+		$(document).ready(function() {
+			$('#QuestionAskModal').on('show.bs.modal', function(e) {
+				var open = $(this).attr('data-easein');
+				$('.modal-dialog').velocity('transition.' + open);
+			});
+
+			$(".js-example-basic-multiple").select2({
+				placeholder: '请添加标签',
+				language: 'zh-CN',
+				maximumSelectionLength: 5,
+				ajax: {
+					url: "/t/question",
+					dataType: 'json',
+					delay: 250,
+					data: function(params) {
+						return {
+							kw: params.term
+						};
+					},
+					processResults: function(ret, params) {
+						// parse the results into the format expected by Select2
+						// since we are using custom formatting functions we do not need to
+						// alter the remote JSON data, except to indicate that infinite
+						// scrolling can be used
+						//console.log(data, params);
+						//params.page = params.page || 1;
+						var dat = [];
+						if (ret.success) {
+							for (var tid in ret.data) {
+								//console.log(attr);
+								var tname = ret.data[tid];
+								dat.push({
+									id: tid,
+									text: tname
+								});
+							}
+						}
+						return {
+							results: dat
+							//                                pagination: {
+							//                                    more: (params.page * 30) < 30
+							//                                }
+						};
+					},
+					cache: true
+				},
+				escapeMarkup: function(markup) {
+					return markup;
+				}, // let our custom formatter work
+				minimumInputLength: 0
+				//templateResult: formatRepo // omitted for brevity, see the source of this page
+				//templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+			});
+			/*function formatRepo(repo) {
+			 if (repo.loading)
+			 return repo.text;
+			 var markup = '<div class="clearfix">' + '<div>' + repo.text + '</div>' + '</div>';
+			 return markup;
+			 }*/
+			var MAXTITLELEN = 50;
+			$('textarea[name=title]').bind('input propertychange', function() {
+				//判断问题标题剩余输入数字并提示
+				if (this.value.length > 40 && this.value.length <= MAXTITLELEN) {
+					$('textarea[name=title]').css({
+						'outline': 'none',
+						'border-color': '#9fadc7'
+					});
+					$('.title-warning').css({
+						'display': 'block',
+						'color': '#9fadc7'
+					}).html('还可以输入' + (MAXTITLELEN - this.value.length) + '个字');
+				} else if (this.value.length > MAXTITLELEN) {
+
+					//判断问题标题溢出字数并提示
+					$('textarea[name=title]').css({
+						'outline': 'none',
+						'border-color': '#e43232'
+					});
+					$('.title-warning').css({
+						'color': '#e43232'
+					}).html('已经超出' + (this.value.length - MAXTITLELEN) + '个字');
+				} else if (this.value.length <= 40) {
+					$('textarea[name=title]').css({
+						'outline': 'none',
+						'border-color': '#9fadc7'
+					});
+					$('.title-warning').css({
+						'display': 'none'
+					})
+				}
+			}).blur(function() {
+				checkQuestionTitle($('textarea[name=title]'));
+			});
+
+			function checkQuestionTitle(n) {
+				var title_content = n.val();
+				if (title_content.length <= MAXTITLELEN) {
+					if (title_content.length == 0) {
+						$('textarea[name=title]').css({
+							'outline': 'none',
+							'border-color': '#e43232'
+						});
+						$('.title-warning').css({
+							'display': 'block',
+							'color': '#e43232'
+						}).html('问题标题不能为空!');
+					} else if (title_content.length < 3) {
+						//判断问题标题是否过短
+						$('textarea[name=title]').css({
+							'outline': 'none',
+							'border-color': '#e43232'
+						});
+						$('.title-warning').css({
+							'display': 'block',
+							'color': '#e43232'
+						}).html('问题标题过短');
+					} else if (title_content.length > MAXTITLELEN) {
+						$('textarea[name=title]').css({
+							'outline': 'none',
+							'border-color': '#e43232'
+						});
+						$('.title-warning').css({
+							'display': 'block',
+							'color': '#e43232'
+						}).html('已经超出' + (titleContent.length - MAXTITLELEN) + '个字');
+					}
+				}
+			}
+
+			$('.btn-submit').click(function() {
+				checkQuestionTitle($('textarea[name=title]'));
+				if ($('.select2-selection__rendered').children().length == 1) {
+					$('.tag-warning').css({
+						'display': 'block',
+						'color': 'red'
+					}).html('至少添加一个标签!');
+					return;
+				} else if ($('.select2-selection__rendered').children().length != 1) {
+					$('.tag-warning').css({
+						'display': 'none'
+					});
+				}
+				$.ajax({
+					url: '/question/new',
+					method: 'POST',
+					data: $('#QuestionAskForm').serialize(),
+					dataType: 'json',
+					success: function(t) {
+						if (t.success) {
+							window.location.reload();
+						} else {
+							alert(t.msg);
+						}
+					}
+				})
+			});
+			$('.select2-selection').blur(function() {
+				console.log(2);
+				if ($('.select2-selection__rendered').children().length == 1) {
+					$('.tag-warning').css({
+						'display': 'block',
+						'color': 'red'
+					}).html('至少添加一个标签!');
+				} else if ($('.select2-selection__rendered').children().length != 1) {
+					$('.tag-warning').css({
+						'display': 'none'
+					});
+				};
+			});
+		});
+	</script>
+</header>
