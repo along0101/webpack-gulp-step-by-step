@@ -1,0 +1,10 @@
+{
+	"presets": [
+	    ["env"],
+	    "react"
+  	],
+  	"ignore":[
+    	"jquery.js",
+    	"bootstrap.js",
+  	]
+}
